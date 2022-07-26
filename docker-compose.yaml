@@ -18,3 +18,9 @@ services:
       - "80:80"
     depends_on:
       - db
+  ng:
+    container_name: ng
+    build: angular
+    ports:
+      - "8080:80"
+    tty: true
