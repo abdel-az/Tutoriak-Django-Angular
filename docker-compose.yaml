@@ -22,5 +22,5 @@ services:
     container_name: ng
     build: angular
     ports:
-      - "8080:80"
+      - "420:420"
     tty: true
