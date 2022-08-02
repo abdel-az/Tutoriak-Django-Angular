@@ -1,5 +1,5 @@
 FROM python:3.9
-
+RUN python -m pip install django-cors-headers
 # Set environment variables
 ENV PYTHONUNBUFFERED 1
 
