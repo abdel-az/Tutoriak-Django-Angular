@@ -1,6 +1,6 @@
 ### Stage 1: build ###
 
-FROM node:latest as builder
+FROM node as builder
 
 # Set working directory.
 RUN mkdir /app

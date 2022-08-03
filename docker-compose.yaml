@@ -23,4 +23,3 @@ services:
     build: angular
     ports:
       - "8080:80"
-    tty: true
