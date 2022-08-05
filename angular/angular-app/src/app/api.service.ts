@@ -9,11 +9,12 @@ import { Task } from './task';
 })
 
 export class ApiService {
+  
   API_URL = 'http://localhost/api';
 
   constructor(private http: HttpClient) { }
 
   public getTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>(`${this.API_URL}/task/`);
+    return this.http.get<Task[]>('${this.API_URL}/task/');
   }
 }
