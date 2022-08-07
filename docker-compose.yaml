@@ -6,8 +6,7 @@ services:
       ports:
           - 5432:5432
       env_file:
-          - ./django/.env       
-  
+          - ./django/.env         
   dj:
     container_name: dj
     build: django
@@ -18,3 +17,8 @@ services:
       - "80:80"
     depends_on:
       - db
+  ng:
+    container_name: ng
+    build: angular
+    ports:
+      - "8080:80"
