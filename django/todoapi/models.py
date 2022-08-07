@@ -7,6 +7,10 @@ from datetime import date
 
 class Task(models.Model):
     "Stores a Task"
+  
+    created_by = models.CharField(max_length=200)
+
+    title = models.CharField(max_length=50)
 
     title = models.CharField(max_length=50)
     content = models.CharField(max_length=50)

@@ -1,36 +1,34 @@
-from . models import Task
-from django.http import Http404
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status 
-
-from . serializers import TaskSecrializer
-
-class TaskList(APIView):
+# For getting the username from the JWT token.
+from rest_framework_jwt.utils import jwt_decode_handler
+from .utils import get_auth0_user_id_from_request
+from rest_framework import generics
+from .models import Task
+from .serializers import TaskSerializer
+# Lists and Creates entries of Task.
+class TaskList(generics.ListCreateAPIView):
     """
-    Returns a single Task and allows updates and deletion of a Task.
+    Lists and creates tasks.
     """
-    def get_object(self, task_id):
-        try:
-            return Task.objects.get(pk=task_id)
-        except Task.DoesNotExist:
-            raise Http404
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
 
-    def get(self, request, task_id, format=None):
-        task = self.get_object(task_id)
-        serializer = TaskSecrializer(task)
-        return Response(serializer.data)
+    def perform_create(self, serializer):
+        token = self.request.META.get('HTTP_AUTHORIZATION', '').split()[1]
+        payload = jwt_decode_handler(token)
+        auth0_user_id = payload.get('sub')
+        # Set the user to the one in the token.
+        serializer.save(created_by=auth0_user_id)
 
-    def put(self, request, task_id, format=None):
-        task = self.get_object(task_id)
-        serializer = TaskSecrializer(task, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get_queryset(self):
+        """
+        This view should return a list of all Tasks
+        for the currently authenticated user.
+        """
+        token = self.request.META.get('HTTP_AUTHORIZATION', '').split()[1]
+        payload = jwt_decode_handler(token)
+        auth0_user_id = payload.get('sub')
+        return Task.objects.filter(created_by=auth0_user_id)
 
-    def delete(self, request, task_id, format=None):
-        task = self.get_object(task_id)
-        task.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT) 
 
+    def perform_create(self, serializer):
+        auth0_user_id = get_auth0_user_id_from_request(self.request)

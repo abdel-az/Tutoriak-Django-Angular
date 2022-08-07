@@ -1,8 +1,11 @@
-
 from rest_framework import serializers
 from .models import Task
 
-class TaskSecrializer(serializers.ModelSerializer):
+class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-        fields = ('id','title', 'content', 'created_on',  'due_date')
+        fields = ('id', 'title', 'content', 'created_on',  'due_date')
+
+        extra_kwargs = {
+            'created_by':  { 'read_only': True }
+        }
