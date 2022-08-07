@@ -52,7 +52,7 @@ export class TaskListComponent implements OnInit {
       )
   }
 
- /* updateTask(task) {
+ updateTask(task) {
     this.apiService.putTask(task)
       .subscribe(
         (response) => {
@@ -60,5 +60,5 @@ export class TaskListComponent implements OnInit {
           this.getTasks();
         }
       )
-  }*/
+  }
 }
