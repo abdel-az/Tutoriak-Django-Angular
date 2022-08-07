@@ -5,7 +5,6 @@ from django.db import models
 
 from datetime import date
 
-
 class Task(models.Model):
     "Stores a Task"
 
