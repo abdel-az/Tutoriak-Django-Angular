@@ -6,8 +6,7 @@ services:
       ports:
           - 5432:5432
       env_file:
-          - ./django/.env       
-  
+          - ./django/.env         
   dj:
     container_name: dj
     build: django
@@ -18,13 +17,8 @@ services:
       - "80:80"
     depends_on:
       - db
-  dj:
-    container_name: dj
-    build: django
-    command: python manage.py runserver 0.0.0.0:80
-    volumes:
-      - ./django:/code
+  ng:
+    container_name: ng
+    build: angular
     ports:
-      - "80:80"
-    depends_on:
-      - db
+      - "8080:80"
