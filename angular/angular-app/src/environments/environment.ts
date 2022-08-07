@@ -4,13 +4,15 @@
 
 export const environment = {
   production: false
-  clientID: 'ZnsbE62yqSb7eVmPvrPoAmVfiUrTp5kf',
+
+  auth: {
+    clientID: 'ZnsbE62yqSb7eVmPvrPoAmVfiUrTp5kf',
   domain: 'dev-inyzgqxd.us.auth0.com', // e.g., you.auth0.com
   audience: 'http://djangoangularapi',
   auth0RedirectUri: 'http://localhost:4200', // URL to return to after auth0 login
   auth0ReturnTo: 'http://localhost:4200', // URL to return to after auth0 logout
   scope: 'openid profile'
-
+  }
 
 
 };
